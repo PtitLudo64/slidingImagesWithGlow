@@ -1,0 +1,147 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 2rem;
+    display: grid;
+    place-content: center;
+    gap: 2rem;
+    min-height: 100vh;
+    background-image: conic-gradient(at 125% 50%,
+            #1100ff,
+            #ff133e,
+            #ffcf0d,
+            #ff133e,
+            #1100ff);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} */
+
+/* .divGlowed {
+    font-family: inherit;
+    color: hsl(246, 55%, 36%);
+    background-color: hsl(0, 100%, 95%);
+    padding: 0.75em 1.25em;
+    border: none;
+    border-radius: 1.25rem;
+    margin: 0 auto;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.8);
+    width: 40vmin;
+    height: 56vmax;
+} */
+
+/* .divGlowed h1 {
+    text-align: center;
+    padding: 1rem 0;
+    font-size: clamp(1rem, 2vw, 2.5rem);
+}
+.divGlowed .container {
+    display: flex;
+    gap: 1rem;
+} */
+
+/* .divGlowed .container img {
+    width: clamp(300px, 20vw, 400px);
+    height: fit-content;
+} */
+/* 
+.divGlowed .container p {
+    width: 25vw;
+    text-align: justify;
+    padding: 0 0 1rem 1rem;
+    font-size: clamp(0.4rem, 1.2vw, 1.2rem);
+    word-spacing: 5px;
+    color: #8008a5;
+} */
+
+.glow-effect {
+    --glow-line-color: #777;
+    --glow-line-width: 2px;
+    --glow-line-length: 20px;
+    --glow-blur-color: #fffffa;
+    --glow-blur-size: 8px;
+    --glow-dash-offset: -80px;
+    --glow-offset: 0px;
+    --animation-speed: 1000ms;
+    --number-of-glow: 2;
+
+    /* Ne pas changer! utilisé pour les calculs */
+    --container-offset: 100px;
+    position: relative;
+}
+
+.glow-container {
+    pointer-events: none;
+    position: absolute;
+    inset: calc(var(--container-offset)/-2);
+    width: calc(100% + var(--container-offset));
+    height: calc(100% + var(--container-offset));
+    opacity: 0;
+    /* outline: 3px solid #00f; */
+}
+
+.glow-blur,
+.glow-line {
+    width: calc(100% - var(--container-offset) + var(--glow-offset));
+    height: calc(100% - var(--container-offset) + var(--glow-offset));
+    x: calc(var(--container-offset) / 2 - calc(var(--glow-offset)/2));
+    y: calc(var(--container-offset) / 2 - calc(var(--glow-offset)/2));
+    /* rx: 1.25rem; Pb avec Safari */
+    stroke: #000;
+    stroke-width: 5px;
+    fill: transparent;
+    stroke-dasharray: var(--glow-line-length) calc(calc(100px / var(--number-of-glow)) - var(--glow-line-length));
+}
+
+.glow-effect:is(:hover, :focus) :is(.glow-line, .glow-blur) {
+    stroke-dashoffset: var(--glow-dash-offset);
+    transition:
+        stroke-dashoffset var(--animation-speed) ease-out;
+}
+.glow-line {
+    stroke: var(--glow-line-color);
+    stroke-width: var(--glow-line-width);
+}
+.glow-blur {
+    stroke: var(--glow-blur-color);
+    stroke-width: var(--glow-blur-size);
+    filter: blur(5px);
+}
+
+.glow-effect:is(:hover, :focus) .glow-container {
+    animation: glow-visibility ease-in-out var(--animation-speed);
+}
+
+@keyframes glow-visibility {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.glow-effect[data-glow-animation="false"] {
+    --glow-line-length: 0;
+}
+.glow-effect[data-glow-offset="true"] {
+    --glow-offset: 10px;
+}
+.glow-effect[data-glow-number="one"] {
+    --glow-line-length: 5px;
+    --number-of-glow: 1;
+    --glow-dash-offset: -23px;
+    --animation-speed: 500ms;
+    --glow-offset: 1px;
+}
